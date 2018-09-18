@@ -1,5 +1,6 @@
 (function () {
   function FrequencyVisualizer(audioContext, canvasElement) {
+    var fracuenciaPintada= document.getElementById("fracuenciaPintada");
     this.analyserNode = audioContext.createAnalyser();
     this.analyserNode.fftSize = 8192;
     this.fftData = new Float32Array(this.analyserNode.frequencyBinCount);
@@ -47,7 +48,9 @@
         gc.moveTo(i + 0.5, gh);
         gc.lineTo(i + 0.5, y);
         gc.stroke();
+
       }
+      fracuenciaPintada.textContent=(Math.floor(this.fftData[10] + this.gain + 15));
     }
 
     this.animationHandle = requestAnimationFrame(function () { this.draw(); }.bind(this));
@@ -61,6 +64,7 @@
   FrequencyVisualizer.prototype.stop = function () {
     this.stopping = true;
   };
+
 
   window.App = window.App || {};
   window.App.FrequencyVisualizer = FrequencyVisualizer;
